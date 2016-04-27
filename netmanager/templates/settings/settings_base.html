@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block mainarea %}
+
+<div class="container">
+  <!-- Example row of columns -->
+  <div class="row">
+    <div class="col-md-4">
+      <h2>{{ request.operator.call }} Settings</h2>
+      <p>Use this page to change your personal settings</p>
+    </div>
+    {% block settingsarea %}{% endblock %}
+  </div>
+</div>
+
+{% endblock %}

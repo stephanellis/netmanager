@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+
+{% block mainarea %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+
+            {% if net.dt_close %}
+            <a href="{{ request.route_url('nets_reopen', id=net.id) }}" class="btn btn-success pull-right">Re-open Net</a>
+            <button class="btn btn-default pull-right">Net Closed at {{ net.dt_close }}</button>
+            {% else %}
+                {% if net.dt_begin %}
+                <a href="{{ request.route_url('nets_close', id=net.id) }}" class="btn btn-danger pull-right">Close Net</a>
+                <button class="btn btn-default pull-right">Net began at {{ net.dt_begin  }}</button>
+                {% else %}
+                <a href="{{ request.route_url('nets_begin', id=net.id) }}" class="btn btn-success pull-right">Begin This Net</a>
+                {% endif %}
+            {% endif %}
+
+            <h4>{{ net.desc }} ({{ net.count_events() }} events)</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Timestamp/Call</th>
+                        <th>Type</th>
+                        <th>Notes</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <form method="post" action="{{ request.route_url('nets_checkin', id=net.id) }}">
+                    <tr>
+                        <td><input type="text" class="form-control" name="call" placeholder="callsign" id="callsign"></td>
+                        <td>
+                            <select class="form-control" name="type" id="checkin_type">
+                                <option>CheckIn</option>
+                                <option>ReCheck</option>
+                                <option>CheckOut</option>
+                                <option>WXReport</option>
+                            </select>
+                        </td>
+                        <td><textarea class="form-control" name="notes" placeholder="Notes/Info" id="notes"></textarea></td>
+                        <td><button class="btn btn-primary" type="submit">Add</button></td>
+                    </tr>
+                    </form>
+                    {% for c in net.CheckIns %}
+                    <form method="post" action="{{ request.route_url('nets_checkin_save', id=net.id, checkin_id=c.id) }}">
+                    <tr class="{{ c.tclass() }}">
+                        <td>
+                            {{ c.dt }}<br>
+                            <h4><a href="{{ request.route_url('operators_edit', call=c.Operator.call) }}" target="_blank">{{ c.Operator.call }}</a>
+                            {% if c.Operator.name %}
+                            / {{ c.Operator.name }}
+                            {% endif %}</h4>
+                        </td>
+                        <td>
+                            {{ c.checkin_type }}<br>
+                            <a href="{{ request.route_url('nets_checkin_del', id=net.id, checkin_id=c.id) }}">Remove</a>
+                        </td>
+                        <td><textarea class="form-control" name="notes">{{ c.notes }}</textarea></td>
+                        <td>
+                            <button class="btn btn-xs btn-primary btn-block" type="submit">Save</button>
+                            {% if c.acked %}
+                            <a class="btn btn-xs btn-warning btn-block" href="{{ request.route_url('nets_checkin_deack', id=net.id, checkin_id=c.id) }}">Deack</a>
+                            {% else %}
+                            <a class="btn btn-xs btn-default btn-block" href="{{ request.route_url('nets_checkin_ack', id=net.id, checkin_id=c.id) }}">Ack</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    </form>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-2">
+            <h4>Operators ({{ net.count_checkins() }})</h4>
+            {% for c in net.checkedin_operators() %}
+            <div class="btn-group btn-block">
+              <button type="button" class="btn btn-block btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{ c.Operator.call }} 
+                {% if c.Operator.name %} / {{ c.Operator.name }}{% endif %}
+
+                <span class="caret"></span>
+              </button>
+              {% set op_call = c.Operator.call %}
+              <ul class="dropdown-menu">
+                <li><a href="#" id="{{ op_call }}_recheck">ReCheck</a></li>
+                <li><a href="#" id="{{ op_call }}_wxreport">WXReport</a></li>
+                <li><a href="#" id="{{ op_call }}_checkout">CheckOut</a></li>
+              </ul>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<script>
+$(document).ready(function () {
+    $('#callsign').focus();
+});
+
+function form_prepop(call,ctype) {
+    $("#callsign").val(call);
+    $("#checkin_type").val(ctype);
+    $("#notes").focus();
+};
+
+{% for c in net.checkedin_operators() %}
+{% set op_call = c.Operator.call %}
+
+$("#{{ op_call }}_recheck").click(function () {
+    form_prepop("{{ op_call }}", "ReCheck");
+});
+
+$("#{{ op_call }}_wxreport").click(function () {
+    form_prepop("{{ op_call }}", "WXReport");
+});
+
+$("#{{ op_call }}_checkout").click(function () {
+    form_prepop("{{ op_call }}", "CheckOut");
+});
+
+{% endfor %}
+
+</script>
+{% endblock %}

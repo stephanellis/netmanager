@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block mainarea %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h2>All Operators</h2>
+      <p>Use this page to manage operators</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Call</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Account Active</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for o in operators %}
+            <tr>
+                <td><a href="{{ request.route_url('operators_edit', call=o.call) }}">{{ o.call }}</a></td>
+                <td>{{ o.name or "" }}</td>
+                <td>{{ o.email or "" }}</td>
+                <td>{{ o.phone or "" }}</td>
+                <td>{{ o.active or "" }}</td>
+                <td></td>
+            </tr>
+            {% endfor %}
+            <form method="post" action="{{ request.route_url('operators_add') }}">
+            <tr>
+                <td><input type="text" name="call" class="form-control" placeholder="Callsign" /></td>
+                <td><input type="text" name="name" class="form-control" placeholder="Name" /></td>
+                <td><input type="text" name="email" class="form-control" placeholder="email" /></td>
+                <td><input type="text" name="phone" class="form-control" placeholder="Phone Number" /></td>
+                <td colspan="2"><button type="submit" class="btn btn-primary">Add</button></td>
+            </tr>
+            </form>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

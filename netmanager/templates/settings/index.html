@@ -1,0 +1,36 @@
+{% extends "settings/settings_base.html" %}
+
+{% block settingsarea %}
+<div class="col-md-6">
+  <h2>Basic Info</h2>
+  <form method="post" action="{{ request.route_url('settings_basic') }}">
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input name="name" type="text" class="form-control" id="name" placeholder="Name" value="{{ request.operator.name }}">
+    </div>
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input name="email" type="email" class="form-control" id="email" placeholder="Email" value="{{ request.operator.email }}">
+    </div>
+    <div class="form-group">
+        <label for="Phone">Phone</label>
+        <input name="phone" type="text" class="form-control" id="Phone" placeholder="Phone Number" value="{{ request.operator.phone }}">
+    </div>
+    
+    <button class="btn btn-primary" type="submit">Set Basic Info</button>
+  </form>
+  <h2>Change Password</h2>
+  <form method="post" action="{{ request.route_url('settings_chpw') }}">
+    <div class="form-group">
+        <label for="exampleInputPassword2">Password</label>
+        <input name="pw1" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+    </div>
+    <div class="form-group">
+        <label for="exampleInputPassword1">Password Again</label>
+        <input name="pw2" type="password" class="form-control" id="exampleInputPassword2" placeholder="Password">
+    </div>
+    <button class="btn btn-primary" type="submit">Change Password</button>
+  </form>
+      
+</div>
+{% endblock %}

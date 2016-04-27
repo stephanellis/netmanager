@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block mainarea %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Timestamp</th>
+            <th>IP Address</th>
+            <th>Operator</th>
+            <th>Message</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for l in logs %}
+          <tr>
+            <td>{{ l.dt }}</td>
+            <td>{{ l.ip }}</td>
+            <td>
+              {% if l.Operator %}
+              {{ l.Operator.call }}
+              {% endif %}
+            </td>
+            <td>{{ l.msg }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

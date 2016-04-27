@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block mainarea %}
+
+{% if active_nets %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      {% for net in nets %}
+      <h4>{{ net.desc }} is Active (as of {{ net.dt_begin }})</h4>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Net</th>
+            <th>Timestamp</th>
+            <th>Callsign</th>
+            <th>Checkin Type</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for c in net.CheckIns %}
+          <tr>
+            <td>{{ c.Net.desc }}</td>
+            <td>{{ c. dt }}</td>
+            <td>{{ c.Operator.call }}</td>
+            <td>{{ c.checkin_type }}</td>
+            <td>{{ c.notes }}</td>
+          </tr>
+          {% endfor %}
+          <tr></tr>
+        </tbody>
+      </table>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% else %}
+<div class="jumbotron">
+      <div class="container">
+        <h1>LIRA Netmanager</h1>
+        <p>a web based application for keeping track of net operations, especially rag chew and server weather nets.</p>
+      </div>
+</div>
+
+<div class="container">
+  <!-- Example row of columns -->
+  <div class="row">
+    <div class="col-md-4">
+      <h2>Gaining Access</h2>
+      <p>Contact any of the net managers on the link system for access:</p>
+      <ul>
+        <li>KE5IRK Geary</li>
+        <li>K5WXL Matt</li>
+        <li>KG5ICZ Stephan</li>
+      </ul>
+    </div>
+    <div class="col-md-4">
+      <h2>Repeaters</h2>
+      <p>These repeaters are part of the link system.</p>
+      <ul>
+        <li>442.525 +5 PL 123 Lawton, OK</li>
+        <li>444.450 +5 PL 123 Cement, OK</li>
+        <li>442.200 +5 PL 123 Grandfield, OK</li>
+        <li>443.300 +5 PL 123 Hedrick, OK</li>
+      </ul>
+      <p>In case of failure on the link system, use this machine</p>
+      <ul>
+        <li>444.075 +5 PL 123 Lake Lawtonka</li>
+      </ul>
+   </div>
+    <div class="col-md-4">
+      <h2>Net Active!</h2>
+      <p>Information about a currently active net or the next scheduled rag chew net will be here.</p>
+    </div>
+  </div>
+</div> <!-- /container -->
+{% endif %}
+{% endblock %}

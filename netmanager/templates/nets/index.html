@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block mainarea %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Created</th>
+                        <th>Begin</th>
+                        <th>Close</th>
+                        <th># Operators / Events</th>
+                        <th>Duration</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for n in nets %}
+                    <tr>
+                        <td><a href="{{ request.route_url('nets_console', id=n.id) }}">{{ n.desc }}</a></td>
+                        <td>{{ n.dt_create }}</td>
+                        <td>{{ n.dt_begin }}</td>
+                        <td>{{ n.dt_close }}</td>
+                        <td>{{ n.count_checkins() }} / {{ n.count_events() }}</td>
+                        <td></td>
+                    </tr>
+                    {% endfor %}
+                    <form method="post" action="{{ request.route_url('nets_add') }}">
+                    <tr>
+                        <td colspan="5"><input type="text" class="form-control" name="desc" placeholder="Description"></td>
+                        <td><button type="submit" class="btn btn-primary">Add</button></td>
+                    </tr>
+                    </form>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

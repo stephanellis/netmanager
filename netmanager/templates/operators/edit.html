@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block mainarea %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h2>Edit {{ o.call }} / {{ o.name }}</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <form method="post" action="{{ request.route_url('operators_save', call=o.call) }}">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input name="name" type="text" class="form-control" id="name" placeholder="Name" value="{{ o.name or "" }}">
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input name="email" type="email" class="form-control" id="email" placeholder="Email" value="{{ o.email or "" }}">
+        </div>
+        <div class="form-group">
+            <label for="Phone">Phone</label>
+            <input name="phone" type="text" class="form-control" id="Phone" placeholder="Phone Number" value="{{ o.phone or "" }}">
+        </div>
+        <div class="checkbox">
+            <label>
+              <input type="checkbox" name="active" {{ 'checked="checked"' if o.active }}> Account Active (Operator can log in)
+            </label>
+        </div>
+        <div class="form-group">
+            <label for="password">Password (will set if supplied)</label>
+            <input name="password" type="text" class="form-control" id="password" placeholder="Password">
+        </div>
+        <button class="btn btn-primary" type="submit">Save Operator</button>
+        <a href="{{ request.route_url('operators_del', call=o.call) }}" class="btn btn-danger pull-right">Delete Operator</a>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
