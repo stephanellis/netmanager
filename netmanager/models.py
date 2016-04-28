@@ -32,7 +32,7 @@ import bcrypt
 from sqlalchemy.orm import class_mapper
 
 import datetime
-
+from pyramid.decorator import reify
 
 class ActivityLog(Base):
     __tablename__ = 'logs'
@@ -90,6 +90,22 @@ class Freq(Base):
     tone = Column(Text)
 
 
+def pretty_time_delta(seconds):
+    sign_string = '-' if seconds < 0 else ''
+    seconds = abs(int(seconds))
+    days, seconds = divmod(seconds, 86400)
+    hours, seconds = divmod(seconds, 3600)
+    minutes, seconds = divmod(seconds, 60)
+    if days > 0:
+        return '%s%dd %dh %dm %ds' % (sign_string, days, hours, minutes, seconds)
+    elif hours > 0:
+        return '%s%dh %dm %ds' % (sign_string, hours, minutes, seconds)
+    elif minutes > 0:
+        return '%s%dm %ds' % (sign_string, minutes, seconds)
+    else:
+        return '%s%ds' % (sign_string, seconds)
+
+
 class Net(Base):
     __tablename__ = "nets"
 
@@ -98,6 +114,35 @@ class Net(Base):
     dt_create = Column(DateTime)
     dt_begin = Column(DateTime)
     dt_close = Column(DateTime)
+
+
+    @reify
+    def dtf_create(self):
+        return self.dt_create.strftime("%Y-%m-%d %H:%M:%S")
+
+
+    @reify
+    def dtf_begin(self):
+        return self.dt_begin.strftime("%Y-%m-%d %H:%M:%S")
+
+
+    @reify
+    def dtf_close(self):
+        return self.dt_close.strftime("%Y-%m-%d %H:%M:%S")
+
+
+    @reify
+    def duration(self):
+        if self.dt_begin:
+            td = None
+            if self.dt_close:
+                td = self.dt_close - self.dt_begin
+            else:
+                td = datetime.datetime.now() - self.dt_begin
+            #return "%s:%s:%s" % (td.hours, td.minutes, td.seconds)
+            return pretty_time_delta(td.seconds)
+        else:
+            return "N/A"
 
 
     def count_checkins(self):
@@ -138,6 +183,11 @@ class CheckIn(Base):
 
     Operator = relationship("Operator", backref=backref("CheckIns"))
     Net = relationship("Net", backref=backref("CheckIns", order_by=desc(id)))
+
+
+    @reify
+    def dtf(self):
+        return self.dt.strftime("%Y-%m-%d %H:%M:%S")
 
 
     def tclass(self):

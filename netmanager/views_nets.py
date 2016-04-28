@@ -73,6 +73,7 @@ class ViewNets(object):
         if desc:
             n = Net(desc=desc, dt_create=datetime.datetime.now())
             DBSession.add(n)
+            alog(self.request, "create net: %s" % desc)
         return HTTPFound(self.request.route_url("nets"))
 
 

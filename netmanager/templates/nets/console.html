@@ -7,11 +7,11 @@
 
             {% if net.dt_close %}
             <a href="{{ request.route_url('nets_reopen', id=net.id) }}" class="btn btn-success pull-right">Re-open Net</a>
-            <button class="btn btn-default pull-right">Net Closed at {{ net.dt_close }}</button>
+            <button class="btn btn-default pull-right">Net Closed at {{ net.dtf_close }}</button>
             {% else %}
                 {% if net.dt_begin %}
                 <a href="{{ request.route_url('nets_close', id=net.id) }}" class="btn btn-danger pull-right">Close Net</a>
-                <button class="btn btn-default pull-right">Net began at {{ net.dt_begin  }}</button>
+                <button class="btn btn-default pull-right">Net began at {{ net.dtf_begin  }}</button>
                 {% else %}
                 <a href="{{ request.route_url('nets_begin', id=net.id) }}" class="btn btn-success pull-right">Begin This Net</a>
                 {% endif %}
@@ -51,8 +51,8 @@
                     <form method="post" action="{{ request.route_url('nets_checkin_save', id=net.id, checkin_id=c.id) }}">
                     <tr class="{{ c.tclass() }}">
                         <td>
-                            {{ c.dt }}<br>
-                            <h4><a href="{{ request.route_url('operators_edit', call=c.Operator.call) }}" target="_blank">{{ c.Operator.call }}</a>
+                            {{ c.dtf }}<br>
+                            <h4><a href="{{ request.route_url('operators_edit', call=c.Operator.call) }}">{{ c.Operator.call }}</a>
                             {% if c.Operator.name %}
                             / {{ c.Operator.name }}
                             {% endif %}</h4>

@@ -19,11 +19,11 @@
                     {% for n in nets %}
                     <tr>
                         <td><a href="{{ request.route_url('nets_console', id=n.id) }}">{{ n.desc }}</a></td>
-                        <td>{{ n.dt_create }}</td>
-                        <td>{{ n.dt_begin }}</td>
-                        <td>{{ n.dt_close }}</td>
+                        <td>{{ n.dtf_create }}</td>
+                        <td>{{ n.dtf_begin }}</td>
+                        <td>{{ n.dtf_close }}</td>
                         <td>{{ n.count_checkins() }} / {{ n.count_events() }}</td>
-                        <td></td>
+                        <td>{{ n.duration }}</td>
                     </tr>
                     {% endfor %}
                     <form method="post" action="{{ request.route_url('nets_add') }}">

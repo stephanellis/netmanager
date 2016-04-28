@@ -17,6 +17,8 @@ requires = [
     'transaction',
     'zope.sqlalchemy',
     'waitress',
+    'bcrypt',
+    'pyramid_jinja2',
     ]
 
 setup(name='netmanager',
