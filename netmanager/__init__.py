@@ -39,6 +39,7 @@ def main(global_config, **settings):
     config.set_authorization_policy(authz_policy)
     config.add_request_method(operator, reify=True)
     config.add_route('index', '/')
+    config.add_route('view_net', '/view_net/{id}')
     config.add_route('signin', '/signin')
     config.add_route('signout', '/signout')
     config.add_route('settings_index', '/settings')

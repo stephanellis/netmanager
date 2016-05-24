@@ -14,6 +14,8 @@ from .models import (
     get_logs,
     active_nets,
     get_active_nets,
+    all_nets,
+    get_net,
     )
 
 import logging
@@ -22,7 +24,12 @@ log = logging.getLogger(__name__)
 
 @view_config(route_name='index', renderer='index.html')
 def index(request):
-    return dict(active_nets=active_nets(), nets=get_active_nets())
+    return dict(active_nets=active_nets(), nets=get_active_nets(), all_nets=all_nets())
+
+
+@view_config(route_name='view_net', renderer='view_net.html')
+def view_net(request):
+    return dict(net=get_net(request.matchdict['id']))
 
 
 @view_config(route_name='signin')

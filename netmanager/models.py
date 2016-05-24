@@ -173,6 +173,7 @@ class CheckIn(Base):
     id = Column(Integer, primary_key=True)
     dt = Column(DateTime)
     checkin_type = Column(Enum("CheckIn", "ReCheck", "CheckOut", "WXReport"), default="CheckIn")
+    location = Column(Text)
     notes = Column(Text)
     acked = Column(Boolean, default=False)
 
