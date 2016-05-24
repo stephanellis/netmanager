@@ -91,6 +91,7 @@ class ViewNets(object):
             call = self.request.params.get('call', False)
             ctype = self.request.params.get('type', False)
             notes = self.request.params.get('notes', False)
+            location = self.request.params.get('location', False)
 
             if call and ctype:
                 call = call.upper()
@@ -98,7 +99,7 @@ class ViewNets(object):
                 if operator is None:
                     operator = Operator(call=call)
                     alog(self.request, "new operator created: %s" % operator.call)
-                checkin = CheckIn(dt=datetime.datetime.now(), notes=notes, checkin_type=ctype)
+                checkin = CheckIn(dt=datetime.datetime.now(), location=location, notes=notes, checkin_type=ctype)
                 checkin.Operator = operator
                 net.CheckIns.append(checkin)
                 alog(self.request, "took checkin for %s type: %s notes: %s" % (operator.call, ctype, notes))
@@ -131,6 +132,7 @@ class ViewNets(object):
         net = get_net(self.request.matchdict['id'])
         if c is not None:
             c.notes = self.request.params.get("notes", "")
+            c.location = self.request.params.get("location", "")
             alog(self.request, "saved checking for %s notes: %s" %(c.Operator.call, c.notes))
         return HTTPFound(self.request.route_url('nets_console', id=net.id))
 
