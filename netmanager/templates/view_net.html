@@ -12,6 +12,7 @@
             <th>Timestamp</th>
             <th>Callsign</th>
             <th>Checkin Type</th>
+            <th>Location</th>
             <th>Notes</th>
           </tr>
         </thead>
@@ -21,6 +22,7 @@
             <td>{{ c.dt }}</td>
             <td>{{ c.Operator.call }}</td>
             <td>{{ c.checkin_type }}</td>
+            <td>{{ c.location }}</td>
             <td>{{ c.notes }}</td>
           </tr>
           {% endfor %}
