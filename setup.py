@@ -45,5 +45,6 @@ setup(name='netmanager',
       main = netmanager:main
       [console_scripts]
       initialize_netmanager_db = netmanager.scripts.initializedb:main
+      #couch_import_netmanager = netmanager.scripts.couch_import:main
       """,
       )

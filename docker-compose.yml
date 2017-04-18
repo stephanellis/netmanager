@@ -1,0 +1,17 @@
+version: '2'
+services:
+  nginx-proxy:
+    privileged: true
+    image: jwilder/nginx-proxy
+    container_name: nginx-proxy
+    ports:
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./nginx-proxy:/etc/nginx/certs:ro
+
+  lnm:
+    image: netmanager
+    container_name: lnm
+    environment:
+      - VIRTUAL_HOST=lnm.vortexok.net

@@ -37,10 +37,7 @@ def main(argv=sys.argv):
     DBSession.configure(bind=engine)
     Base.metadata.create_all(engine)
     with transaction.manager:
-        op1 = Operator(call="KE5IRK", name="Geary McDowell", email="geary@att.net", active=True)
-        op2 = Operator(call="KG5ICZ", name="Stephan M Ellis", email="stephan@stphn.com", active=True)
+        op1 = Operator(call="N0CALL", name="Default Super User", email="n0call@example.net", active=True)
         op1.Roles.append(Role(role="Super User"))
-        op2.Roles.append(Role(role="Net Manager"))
         op1.set_password("pass123")
-        op2.set_password("pass123")
-        DBSession.add_all([op1,op2])
+        DBSession.add(op1)
