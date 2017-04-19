@@ -26,3 +26,5 @@ initialize_netmanager_db development.ini
 This will setup the database and create a user N0CALL with a password of pass123.
 
 Add an operator set a password and check the box for a new user.
+
+An image based on this repo should be automatically built by docker hub when update.
