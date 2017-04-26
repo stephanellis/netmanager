@@ -1,0 +1,5 @@
+{{ p | safe }}
+
+{% for o in objects %}
+{% for l in o.origlines %}
+{{ l | safe }}{% endfor %}{% endfor %}

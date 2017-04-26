@@ -90,6 +90,18 @@ class Freq(Base):
     tone = Column(Text)
 
 
+class SNFeed(Base):
+    __tablename__ = "snfeeds"
+
+    name = Column(Text, primary_key=True)
+    names = Column(Text)
+
+def get_snfeed(name):
+    try:
+        return DBSession.query(SNFeed).get(name)
+    except:
+        return None
+
 def pretty_time_delta(seconds):
     sign_string = '-' if seconds < 0 else ''
     seconds = abs(int(seconds))
@@ -258,4 +270,3 @@ def get_active_nets():
             Net.dt_close==None
             )).all()
     return nets
-
