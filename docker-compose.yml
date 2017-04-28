@@ -1,17 +1,16 @@
-version: '2'
+version: "2"
 services:
-  nginx-proxy:
-    privileged: true
-    image: jwilder/nginx-proxy
-    container_name: nginx-proxy
+  redis:
+    image: redis
     ports:
-      - "443:443"
+      - "6379:6379"
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
     volumes:
-      - /var/run/docker.sock:/tmp/docker.sock:ro
-      - ./nginx-proxy:/etc/nginx/certs:ro
-
-  lnm:
-    image: netmanager
-    container_name: lnm
-    environment:
-      - VIRTUAL_HOST=lnm.vortexok.net
+      - .:/opt/netmanager:Z
+    links:
+      - redis
+    ports:
+      - "6543:6543"

@@ -5,5 +5,5 @@ WORKDIR /opt/netmanager
 RUN pip install -e .
 RUN pip install gunicorn
 EXPOSE 6543
-CMD gunicorn -w 4 --proxy-protocol --paste development.ini
-#CMD pserve --reload development.ini
+#CMD gunicorn -w 4 --proxy-protocol --paste development.ini
+CMD pserve --reload development.ini

@@ -18,6 +18,7 @@ from sqlalchemy.orm import (
     sessionmaker,
     relationship,
     backref,
+    subqueryload
     )
 
 from zope.sqlalchemy import ZopeTransactionExtension
