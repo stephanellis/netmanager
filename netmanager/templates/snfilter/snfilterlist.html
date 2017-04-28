@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block mainarea %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Name List</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for f in filteredfeeds %}
+          <form method="post" action="{{ request.route_url('snfilterlist_save', name=f.name) }}">
+          <tr>
+            <td>
+              {{ f.name }}
+              (
+              <a href="{{ request.route_url("snfilter", name=f.name, outputformat='json') }}" target="_blank">json</a>
+              <a href="{{ request.route_url("snfilter", name=f.name, outputformat='gr') }}" target="_blank">gr</a>
+              <a href="{{ request.route_url("snfilter", name=f.name, outputformat='truvu') }}" target="_blank">truvu</a>
+              )
+            </td>
+            <td><input type="text" class="form-control" name="desc" placeholder="My Filtered Feed" id="desc" value="{{ f.desc }}"></td>
+            <td><input type="text" class="form-control" name="nameslist" placeholder="W5ZFQ:Andrew,Daniel Shaw,Ben Holcomb" id="nameslist" value="{{ f.nameslist }}"></td>
+            <td>
+              <button class="btn btn-primary" type="submit">Save</button>
+              <a href="{{ request.route_url('snfilterlist_del', name=f.name) }}">Remove</a>
+            </td>
+          </tr>
+          </form>
+          {% endfor %}
+          <form method="post" action="{{ request.route_url('snfilterlist_add')}}">
+          <tr>
+            <td><input type="text" class="form-control" name="name" placeholder="feedname" id="name"></td>
+            <td><input type="text" class="form-control" name="desc" placeholder="My Filtered Feed" id="desc"></td>
+            <td><input type="text" class="form-control" name="nameslist" placeholder="W5ZFQ:Andrew,Daniel Shaw,Ben Holcomb" id="nameslist"></td>
+            <td><button class="btn btn-primary" type="submit">Add</button></td>
+          </tr>
+          </form>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

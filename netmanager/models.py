@@ -95,13 +95,20 @@ class SNFeed(Base):
     __tablename__ = "snfeeds"
 
     name = Column(Text, primary_key=True)
-    names = Column(Text)
+    desc = Column(Text)
+    nameslist = Column(Text)
 
 def get_snfeed(name):
     try:
         return DBSession.query(SNFeed).get(name)
     except:
         return None
+
+def all_snfeeds():
+    return DBSession.query(SNFeed).all()
+
+def add_snfeed(name, desc, nameslist):
+    DBSession.add(SNFeed(name=name, desc=desc, nameslist=nameslist))
 
 def pretty_time_delta(seconds):
     sign_string = '-' if seconds < 0 else ''
