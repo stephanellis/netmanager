@@ -19,6 +19,7 @@ requires = [
     'waitress',
     'bcrypt',
     'pyramid_jinja2',
+    'snfilter',
     ]
 
 setup(name='netmanager',

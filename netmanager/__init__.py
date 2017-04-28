@@ -63,7 +63,6 @@ def main(global_config, **settings):
     config.add_route('nets_checkin_deack', '/nets/checkin_deack/{id}/{checkin_id}')
     config.add_route('nets_checkin_save', '/nets/checkin_save/{id}/{checkin_id}')
     config.add_route('nets_checkin_del', '/nets/checkin_del/{id}/{checkin_id}')
-    config.add_route('snf_gr', '/snf_gr/{name}')
-    config.add_route('snf_csv', '/snf_csv/{name}')
+    config.add_route('snfilter', '/snfilter/{name}/{outputformat}')
     config.scan()
     return config.make_wsgi_app()
