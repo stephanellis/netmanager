@@ -50,6 +50,7 @@ def main(global_config, **settings):
     config.add_route('operators_edit', '/operators/edit/{call}')
     config.add_route('operators_save', '/operators/save/{call}')
     config.add_route('operators_del', '/operators/del/{call}')
+    config.add_route('operators_lastlocation', '/operators/last/{call}')
     config.add_route('activitylog', '/activitylog')
     config.add_route('nets', '/nets')
     config.add_route('nets_add', '/nets/add')

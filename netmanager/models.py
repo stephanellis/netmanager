@@ -70,6 +70,14 @@ class Operator(Base):
         else:
             return False
 
+def get_operator_lastlocation(operator_call):
+    if operator_call is not None:
+        results = DBSession.query(CheckIn).filter(CheckIn.operator_call==operator_call).order_by(desc(CheckIn.id)).all()
+        for r in results:
+            if r.location != "" and r.location is not None:
+                return r.location
+    return ""
+
 
 class Role(Base):
     __tablename__ = "roles"

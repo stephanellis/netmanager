@@ -10,6 +10,7 @@ from .models import (
     DBSession,
     Operator,
     get_operator,
+    get_operator_lastlocation,
     all_operators,
     asdict,
     alog,
@@ -29,12 +30,19 @@ class ViewOperators(object):
     """
     def __init__(self, request):
         self.request = request
+        if "call" in self.request.matchdict:
+            self.operator_call = self.request.matchdict["call"].upper()
+        else:
+            self.operator_call = ""
 
 
     @view_config(route_name="operators", renderer="operators/operators_base.html")
     def index(self):
         return dict(operators=all_operators())
 
+    @view_config(route_name="operators_lastlocation", renderer="string")
+    def lastlocation(self):
+        return "Last loc for %s" % get_operator_lastlocation(self.operator_call)
 
     @view_config(route_name="operators_add")
     def add(self):
@@ -94,4 +102,3 @@ class ViewOperators(object):
         DBSession.delete(o)
         alog(self.request, "deleted operator %s" % o.call)
         return HTTPFound(self.request.route_url('operators'))
-
