@@ -42,7 +42,7 @@ class ViewOperators(object):
 
     @view_config(route_name="operators_lastlocation", renderer="string")
     def lastlocation(self):
-        return "Last loc for %s" % get_operator_lastlocation(self.operator_call)
+        return get_operator_lastlocation(self.operator_call)
 
     @view_config(route_name="operators_add")
     def add(self):
