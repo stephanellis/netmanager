@@ -84,7 +84,7 @@
             {% for c in net.checkedin_operators() %}
             <div class="btn-group btn-block">
               <button type="button" class="btn btn-block btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                {{ c.Operator.call }} 
+                {{ c.Operator.call }}
                 {% if c.Operator.name %} / {{ c.Operator.name }}{% endif %}
 
                 <span class="caret"></span>
@@ -104,13 +104,35 @@
 <script>
 $(document).ready(function () {
     $('#callsign').focus();
+    $('#location').focusout(
+      function () {
+        console.log("event fired");
+        console.log("textarea value is " + $("#location").val());
+        if ($("#location").val() == "") {
+          $.ajax({
+            url: "/operators/last/" + $("#callsign").val(),
+            success: function (response) {
+              $("#location").val(response);
+            }
+          });
+        }
+      }
+    );
 });
 
 function form_prepop(call,ctype) {
     $("#callsign").val(call);
     $("#checkin_type").val(ctype);
     $("#notes").focus();
+    $.ajax({
+      url: "/operators/last/" + call,
+      success: function (response) {
+        $("#location").val(response);
+      }
+    });
 };
+
+
 
 {% for c in net.checkedin_operators() %}
 {% set op_call = c.Operator.call %}
