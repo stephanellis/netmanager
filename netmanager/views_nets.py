@@ -84,6 +84,15 @@ class ViewNets(object):
         return dict(net=net, operators=operators)
 
 
+    @view_config(route_name="nets_checkin_report", renderer="string")
+    def nwschat_report(self):
+        if "checkin_id" in self.request.matchdict:
+            c = get_checkin(self.request.matchdict["checkin_id"])
+            if c is not None:
+                return "Via LIRA Severe Weather Net, %s reports \"%s\" from location: \"%s\"" % (c.operator_call, c.notes, c.location)
+        else:
+            return "Invalid"
+
     @view_config(route_name="nets_checkin")
     def checkin(self):
         net = get_net(self.request.matchdict['id'])
@@ -144,4 +153,3 @@ class ViewNets(object):
         if c is not None:
             DBSession.delete(c)
         return HTTPFound(self.request.route_url('nets_console', id=net.id))
-

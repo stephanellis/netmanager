@@ -61,7 +61,8 @@
                         </td>
                         <td>
                             {{ c.checkin_type }}<br>
-                            <a href="{{ request.route_url('nets_checkin_del', id=net.id, checkin_id=c.id) }}">Remove</a>
+                            <a href="{{ request.route_url('nets_checkin_del', id=net.id, checkin_id=c.id) }}">Remove</a><br>
+                            <a href="{{ request.route_url('nets_checkin_report', checkin_id=c.id)}}" target="_blank">NWSChat Report</a>
                         </td>
                         <td><textarea class="form-control" name="location", placeholder="Location" id="location">{{ c.location }}</textarea></td>
                         <td><textarea class="form-control" name="notes">{{ c.notes }}</textarea></td>
