@@ -18,7 +18,8 @@ from sqlalchemy.orm import (
     sessionmaker,
     relationship,
     backref,
-    subqueryload
+    subqueryload,
+    joinedload
     )
 
 from zope.sqlalchemy import ZopeTransactionExtension
@@ -242,7 +243,7 @@ def all_operators():
 
 
 def all_nets():
-    return DBSession.query(Net).order_by(desc(Net.dt_create)).all()
+    return DBSession.query(Net).order_by(desc(Net.dt_create)).options(joinedload('CheckIns')).all()
 
 
 def get_net(id):

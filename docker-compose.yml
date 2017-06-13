@@ -1,16 +1,10 @@
 version: "2"
 services:
-  redis:
-    image: redis
-    ports:
-      - "6379:6379"
   web:
     build:
       context: .
       dockerfile: Dockerfile
     volumes:
       - .:/opt/netmanager:Z
-    links:
-      - redis
     ports:
       - "6543:6543"
