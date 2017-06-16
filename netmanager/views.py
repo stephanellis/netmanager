@@ -68,4 +68,3 @@ def signout(request):
 @view_config(route_name="activitylog", renderer="activitylog.html", permission=Authenticated)
 def activitylog(request):
     return dict(logs=get_logs())
-

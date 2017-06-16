@@ -287,3 +287,22 @@ def get_active_nets():
             Net.dt_close==None
             )).all()
     return nets
+
+def generate_chart(title, charttype, data):
+    dps = list()
+    for r in data:
+        dps.append(dict(label=r[0], y=r[1]))
+    d = {
+        "title":{"text":title},
+        "data":[
+            {
+                "type":charttype,
+                "dataPoints":dps
+            }
+        ]
+    }
+    return d
+
+def chart_operator_activity():
+    rs = DBSession.execute("select distinct(operator_call) as callsign, count() as c from checkins group by callsign order by c desc limit 20;").fetchall()
+    return generate_chart("Activity by Operator", "pie", rs)
