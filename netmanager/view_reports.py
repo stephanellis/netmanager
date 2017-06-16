@@ -17,6 +17,7 @@ from .models import (
     all_nets,
     get_net,
     chart_operator_activity,
+    chart_net_participation,
     )
 
 import logging
@@ -34,3 +35,7 @@ class ReportViews(object):
     @view_config(route_name="chart_operator_activity", renderer="json")
     def chart_operator_activity(self):
         return chart_operator_activity()
+
+    @view_config(route_name="chart_net_participation", renderer="json")
+    def chart_operator_activity(self):
+        return chart_net_participation()

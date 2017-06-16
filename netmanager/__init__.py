@@ -67,5 +67,6 @@ def main(global_config, **settings):
     config.add_route('nets_checkin_report', '/nets/checkin_report/{checkin_id}')
     config.add_route('reports', '/reports')
     config.add_route('chart_operator_activity', '/reports/chart_operator_activity')
+    config.add_route('chart_net_participation', '/reports/chart_net_participation')
     config.scan()
     return config.make_wsgi_app()

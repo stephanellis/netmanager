@@ -306,3 +306,7 @@ def generate_chart(title, charttype, data):
 def chart_operator_activity():
     rs = DBSession.execute("select distinct(operator_call) as callsign, count() as c from checkins group by callsign order by c desc limit 20;").fetchall()
     return generate_chart("Activity by Operator", "pie", rs)
+
+def chart_net_participation():
+    rs = DBSession.execute("select distinct(net_id) as net, count() as c from checkins group by net order by c;").fetchall()
+    return generate_chart("Net Participation", "line", rs)
