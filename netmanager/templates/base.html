@@ -36,7 +36,7 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           {% if not request.operator %}
-          <form class="navbar-form navbar-right" action="{{ request.route_url('signin') }}">
+          <form class="navbar-form navbar-right" method="post" action="{{ request.route_url('signin') }}">
             <div class="form-group">
               <input type="text" name="callsign" placeholder="Callsign" class="form-control">
             </div>

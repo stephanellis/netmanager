@@ -8,3 +8,9 @@ services:
       - .:/opt/netmanager:Z
     ports:
       - "6543:6543"
+    links:
+      - db
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=21kill22

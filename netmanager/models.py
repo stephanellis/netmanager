@@ -66,7 +66,7 @@ class Operator(Base):
 
 
     def check_password(self, ctext):
-        if bcrypt.hashpw(ctext.encode("utf-8"), self.password) == self.password:
+        if bcrypt.hashpw(ctext.encode("utf-8").decode(), self.password) == self.password:
             return True
         else:
             return False
@@ -175,7 +175,7 @@ class Net(Base):
 
 
     def count_checkins(self):
-        return DBSession.query(CheckIn).filter(CheckIn.net_id==self.id).group_by(CheckIn.operator_call).count()
+        return DBSession.query(CheckIn.operator_call).filter(CheckIn.net_id==self.id).group_by(CheckIn.operator_call).count()
 
 
     def count_events(self):
@@ -244,6 +244,7 @@ def all_operators():
 
 def all_nets():
     return DBSession.query(Net).order_by(desc(Net.dt_create)).options(joinedload('CheckIns')).all()
+    #return DBSession.query(Net).order_by(desc(Net.id)).all()
 
 
 def get_net(id):
