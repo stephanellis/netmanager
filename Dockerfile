@@ -1,6 +1,6 @@
 FROM python:3.5
 ENV PYTHONUNBUFFERED=true
-ADD . /opt/netmanager
+COPY . /opt/netmanager
 WORKDIR /opt/netmanager
 RUN pip install -e .
 RUN pip install gunicorn
