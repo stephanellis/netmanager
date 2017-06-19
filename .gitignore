@@ -62,5 +62,6 @@ target/
 .ipynb_checkpoints
 
 *.sqlite
+*.psql
 
 nginx-proxy/
