@@ -87,6 +87,7 @@ class ViewNets(object):
     @view_config(route_name="nets_console_js", renderer="nets/netconsole.js")
     def consolejs(self):
         net=get_net(self.request.matchdict['id'])
+        self.request.response.content_type = "application/javascript"
         return dict(net=net)
 
 
