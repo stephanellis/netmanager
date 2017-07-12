@@ -84,6 +84,12 @@ class ViewNets(object):
         return dict(net=net, operators=operators)
 
 
+    @view_config(route_name="nets_console_js", renderer="nets/netconsole.js")
+    def consolejs(self):
+        net=get_net(self.request.matchdict['id'])
+        return dict(net=net)
+
+
     @view_config(route_name="nets_checkin_report", renderer="string")
     def nwschat_report(self):
         if "checkin_id" in self.request.matchdict:
